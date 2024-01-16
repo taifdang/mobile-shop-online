@@ -1,0 +1,30 @@
+﻿<div class="container login-modal">
+    <div class="login-box">
+        <div class="style-left login-content">
+            <img src="~/image/login.png" alt="">
+        </div>
+        <div class="style-right login-content">
+            <h3>Xin chào !</h3>
+            <p class="text-secondary">Hãy đăng nhập để nhận được những ưu đãi tốt nhất từ chúng tôi</p>
+            @using (Html.BeginForm("Login", "Users"))
+            {
+                
+                <div class="form-group">
+                    <input type="email" class="form-control" name="UserEmail" aria-describedby="emailHelp" placeholder="Tài khoản" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="UserPassword" placeholder="Mật khẩu" required>
+                </div>
+                <small class="text-danger">@ViewBag.ThongBao</small>
+
+                <input type="submit" class="btn" value="Đăng nhập">
+                <div class="register-box">
+                    <p>Bạn chưa có tài khoản ?</p>
+                    <a href="@Url.Action("Register","Users")">Đăng ký ngay</a>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+

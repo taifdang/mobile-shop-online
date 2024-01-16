@@ -1,0 +1,153 @@
+﻿
+@model List<MobileShopOnline.Models.CartItem>
+@{
+    var user = Session["Account"] as MobileShopOnline.Models.Customer;
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+
+
+<!-- bill -->
+<div class="container">
+    <h2 style="margin-top: 20px;"><i class="bi bi-receipt-cutoff"></i> Xác nhận đơn hàng của bạn </h2>
+
+    <div class="row">
+        <div class="col-lg-8 cart">
+        </div>
+    </div><br>
+          <div class="card-bill">
+              <div class="product border-bottom table-responsive">
+                  <table class="table table-borderless">
+                      <tr>
+                          <th>STT</th>
+                          <th>Sản phẩm</th>
+                          <th>Số lượng</th>
+                          <th>Thành tiền</th>
+                      </tr>
+                      <!--product-1-->
+                      @{ int index = 1;}
+                      @foreach (var item in Model)
+                      {
+
+                          <tr class="cart-item">
+                              <td>@(index++)</td>
+                              <td>
+                                  <a href="#">
+                                      <div class="product-infor-cart">
+                                          <img src="~/image/@item.ImagePro" alt="">
+                                          <div class="name-product-cart">
+                                              @item.NamePro
+                                          </div>
+                                      </div>
+                                  </a>
+                              </td>
+                              <td>@item.Number</td>
+                              <td>
+                                  <div class="into-money-cart">@String.Format(formatMoney, "{0:c0}", item.FinalPrice())</div>
+                              </td>
+                          </tr>
+                      }
+
+                      <!--end-product-1-->
+
+                  </table>
+              </div>
+
+              <form action="Order" method="post">
+                  <div class="row d-flex order-infor">
+                      <div class="col-md-6">
+                          <table class="table table-borderless">
+                              <tbody class="totals-bill">
+                                  <tr>
+                                      <td>
+                                          <div class="text-left"> <span class="text-muted">Tên khách hàng</span> </div>
+                                      </td>
+                                      <td>
+                                          <div class="text-right"> <span>@user.UserName</span> </div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          <div class="text-left"> <span class="text-muted">Số điện thoại</span> </div>
+                                      </td>
+                                      <td>
+                                          <div class="text-right"><span> @user.PhoneNumber</span> </div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      @*<td>
+                                    <div class="text-left"> <span class="text-muted">Ngày đặt </span> </div>
+                                </td>
+                                <td>
+                                    <div class="text-right"> <span>@String.Format("{0:dd/MM/yyyy}", DateTime.Now)</span> </div>
+                                </td>*@
+                                  </tr>
+
+                                  <tr>
+                                      <td colspan="2">
+                                          <div class="text-left"> <span class="text-muted">Địa chỉ giao hàng </span> </div>
+                                          <textarea name="addressOrder" class="order-address-input" required placeholder="Nhập địa chỉ ..."></textarea>
+                                      </td>
+                                  </tr>
+
+
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <div class="col-md-6">
+                          <table class="table table-borderless">
+                              <tbody class="totals-bill">
+                                  <tr>
+                                      <td>
+                                          <div class="text-left"> <span class="text-muted">Tổng phụ</span> </div>
+                                      </td>
+                                      <td>
+                                          <div class="text-right"> <span>@String.Format(formatMoney, "{0:c0}", ViewBag.TotalPrice)</span> </div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          <div class="text-left"> <span class="text-muted">Phí vận chuyển</span> </div>
+                                      </td>
+                                      <td>
+                                          <div class="text-right"> <span>0 đ</span> </div>
+                                      </td>
+                                  </tr>
+
+                                  <tr>
+                                      <td>
+                                          <div class="text-left"> <span class="text-muted">Khuyến mãi</span> </div>
+                                      </td>
+                                      <td>
+                                          <div class="text-right"> <span class="text-success">0 đ</span> </div>
+                                      </td>
+                                  </tr>
+                                  <tr class="border-top border-bottom">
+                                      <td>
+                                          <div class="text-left"> <span class="font-weight-bold">Tổng tiền</span> </div>
+                                      </td>
+                                      <td>
+                                          <div class="text-right"> <span class="font-weight-bold">@String.Format(formatMoney, "{0:c0}", ViewBag.TotalPrice)</span> </div>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+
+                          <div class="order-action">
+                              <button class="btn btn-info" type="submit">Thanh toán</button>
+                              <button class="btn btn-danger" onclick="location.href = '@Url.Action("GetOrder/" + user.UserID,"Order")'">Hủy</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </form>
+
+
+
+              <!-- <p>Chúng tôi sẽ gửi email xác nhận giao hàng khi mặt hàng được vận chuyển thành công!</p>
+    <p class="font-weight-bold mb-0">Cảm ơn đã mua hàng của chúng tôi!!</p><br> <span>MobileShop Team</span> -->
+          </div>
+</div>
+
+<!--end-bill-->

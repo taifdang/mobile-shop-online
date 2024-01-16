@@ -1,0 +1,71 @@
+﻿ @model IEnumerable<MobileShopOnline.Models.News>   
+    
+    <!-- slider -->
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="#"><img class="d-block w-100" src="~/Image/1.png" alt="First slide"></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#"><img class="d-block w-100" src="~/Image/2.png" alt="Second slide"></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#"><img class="d-block w-100" src="~/Image/3.png" alt="Second slide"></a>
+                        </div>
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 advertise">
+                <div class="item">
+                    <a href="#"><img src="~/Image/ipad-vtb-360x202.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="~/Image/480.248.jpg" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end-slider -->
+<!-- news -->
+<div class="container">
+    <div class="box-new">
+        <h5>TIN TỨC NỔI BẬT</h5>
+
+        @foreach (var item in Model)
+        {
+            <!-- new-1 -->
+            <div class="box-new-item">
+                <a href="@Url.Action("News/" + item.NewsID,"NewsCategory")">
+                    <img src="~/image/@item.NewsImage" alt="">
+
+                    <div class="box-new-content">
+                        <h3>@item.NewsTitle </h3>
+                        <p>
+                            @item.NewsContent.Substring(0,360) ....
+                        </p>
+                        <span class="elementor-post-date"> @String.Format("{0:dd/MM/yyyy}", item.PostDate) </span>
+                    </div>
+                </a>
+
+            </div>
+            <!-- end-new-1 -->
+        }
+
+    </div>
+</div>
+<!-- end-news -->

@@ -1,0 +1,23 @@
+﻿@model MobileShopOnline.Models.News
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <h1 class="clrTit bld tuht_show" id="article_title">@Model.NewsTitle </h1>
+
+
+    <img class="card-img-bottom" src="~/image/@Model.NewsImage" alt="card image cap">
+
+    <p>@Model.NewsContent</p>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.NewsID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+

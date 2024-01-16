@@ -1,0 +1,47 @@
+﻿<!-- nav-bar -->
+<div class="narbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="dropdown">
+                    <button class="btn-category" data-toggle="dropdown">
+                        <i class="bi bi-list"></i>Danh mục tìm kiếm
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach (var item in ViewBag.CategoryNavList)
+                            {
+                                <a class="dropdown-item" href="@Url.Action("Index/" + item.CategoryID,"Category")">@item.CategoryName</a>
+                            }
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-9">
+                <ul class="nav justify-content-center nav-list">
+                    <li class="nav-item">
+
+                        <a class="nav-link active" aria-current="page" href="@Url.Action("GetAllProduct","Category")"><i class="bi bi-phone"></i>Điện thoại</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index/" + 1,"Category")"><i class="bi bi-apple"></i>IOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-tablet"></i>Tablet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-headphones"></i>Phụ kiện</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","NewsCategory")"><i class="bi bi-newspaper"></i>Tin tức</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-newspaper"></i>Giới thiệu</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end-nar-bar -->

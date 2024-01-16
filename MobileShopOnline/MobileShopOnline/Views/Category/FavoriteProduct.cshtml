@@ -1,0 +1,54 @@
+﻿@{
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<!-- favoryte prod -->
+
+<div class="container">
+    <h2 style="margin-top: 20px;">Sản phẩm yêu thích</h2>
+
+
+
+    <div class="favorite-product">
+        <table class="favorite-prod-infor">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Đơn giá</th>
+            </tr>
+            @foreach (var item in ViewBag.ProductInfor)
+            {
+                <!-- produc-1 -->
+                <tr class="cart-item">
+
+                    <td>
+                        <a href="#">
+                            <div class="product-infor-cart">
+                                <img src="~/image/@item.Image1" alt="">
+                                <div class="name-product-cart">@item.ProductName</div>
+                            </div>
+                        </a>
+                    </td>
+
+                    <td>
+                        <div class="unit-price-cart">@String.Format(formatMoney, "{0:c0}", item.Price)</div>
+                    </td>
+
+                    <td>
+                        <button class="update-product-btn" type="submit"> <i class="bi bi-cart-plus-fill"></i></button>
+                        <button class="delete-product-cart"><i class="bi bi-trash3-fill"></i></button>
+                    </td>
+                </tr>
+
+                <!-- end product 1 -->
+            }
+
+
+
+        </table>
+    </div>
+
+
+
+
+</div>
+
+<!-- end favorite-prod -->

@@ -1,0 +1,23 @@
+﻿@model MobileShopOnline.Models.News
+
+<!--new-1-->
+<div class="container">
+    <div class="col">
+        <div class="col-lg-9">
+            <div class="brand">
+                <h5>TIN TỨC NỔI BẬT</h5>
+            </div>
+            <h1 class="clrTit bld tuht_show" id="article_title">@Model.NewsTitle </h1>
+
+            <h5>
+                @Model.NewsContent.Substring(0, ViewBag.IndexOfDot)
+            </h5>
+            <img class="card-img-bottom" src="~/image/@Model.NewsImage" alt="card image cap">
+
+            <p>@Model.NewsContent.Substring(ViewBag.IndexOfDot +1)</p>
+
+
+        </div>
+    </div>
+</div>
+<!--end-new-1-->

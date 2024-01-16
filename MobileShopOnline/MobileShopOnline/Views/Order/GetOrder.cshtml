@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MobileShopOnline.Models.Order>
+
+<!-- bill -->
+<div class="container">
+    <h2 style="margin-top: 20px;">Đơn hàng của bạn <i class="bi bi-receipt-cutoff"></i></h2>
+    <div class="row">
+        <div class="col-lg-8">
+        </div>
+    </div><br>
+    <div class="card-bill">
+        <div class="product border-bottom table-responsive">
+            <table class="table table-borderless">
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Số lượng</th>
+                    <th>Trạng thái</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <!--Order-1-->
+                    <tr class="cart-item">
+                        <td>#@item.IdOrder</td>
+                        <td>@String.Format("{0:dd/MM/yyyy}", item.DateOrder)</td>
+                        <td>@item.QuantityProduct</td>
+                        @if (item.StatusOrder == 0)
+                        {
+                            <td style="color:red;">Chưa xác nhận</td>
+                        }
+                        else if(item.StatusOrder == 1)
+                        {
+                            <td style="color:forestgreen;">Đã xác nhận</td>
+
+                        }
+                        else
+                        { 
+                            <td style="color:orange;">Đã hủy </td>
+
+                        }
+
+                        <td><a href="@Url.Action("OrderDetail/" + item.IdOrder,"Order")" alt="">Chi tiết </a></td>
+                    </tr>
+                    <!--end-Order-1-->
+                }
+
+
+            </table>
+        </div>
+    </div>
+</div>
+<!--end-product-2-->

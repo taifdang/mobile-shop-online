@@ -1,0 +1,352 @@
+﻿
+@using MobileShopOnline.Models
+
+@{
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var user = Session["Account"] as MobileShopOnline.Models.Customer;
+}
+
+
+
+
+
+
+<div class="container">
+    <!-- breadcumbs -->
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index/" + ViewBag.ThisProdCategories.CategoryID ,"Category")">@ViewBag.ThisProdCategories.CategoryName</a></li>
+            <li class="breadcrumb-item"><a href="#">@ViewBag.ProdDetails.ProductName</a></li>
+
+        </ol>
+    </nav>
+    <!-- end-breadcumbs -->
+    <!-- details -->
+    <div class="row details-product">
+        <div class="col-lg-4">
+            <div class="pic-produce">
+                <img src="~/image/@ViewBag.ProdDetails.Image1" alt="image product" class="main-image-detail" id="main_details-image">
+                <div class="sub-image ">
+                    <img src="~/image/@ViewBag.ProdDetails.Image1" alt="image-produce">
+                    <img src="~/image/@ViewBag.ProdDetails.Image2" alt="image produce">
+                    <img src="~/image/@ViewBag.ProdDetails.Image3" alt="image-produce">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 infor-details">
+            <h3>@ViewBag.ProdDetails.ProductName</h3>
+            <div class="price-details">
+
+                <span class="initial-price-details">@String.Format(formatMoney, "{0:c0}", ViewBag.ProdDetails.IntialPrice)</span>
+                <h3 class="price-details-product">@String.Format(formatMoney, "{0:c0}", ViewBag.ProdDetails.Price)</h3>
+            </div>
+            @if (ViewBag.ProdDetails.amount > 0)
+            {
+                <div class="status-product">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    Hiện đang còn hàng
+                </div>
+            }
+            else
+            {
+                <div class="status-product" style="color:darkred">
+                    <i class="bi bi-x-circle-fill"></i>
+                    Hết hàng
+                </div>
+            }
+
+            <div class="rating-details">
+                <label>Đánh giá trung bình: </label>
+                <span class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill status-off-star"></i>
+                </span>
+            </div>
+
+
+            <div class="prod-options">
+
+
+
+                @if (ViewBag.ProdDetails.amount > 0)
+                {
+                    if (user != null)
+                    {
+                        using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { @class = "form-add-to-cart" }))
+                        {
+                            <div class="quantity" id="handleCounter">
+                                <span style="margin-right: 20px;">Số lượng</span>
+                                <button type="button" class="btn quantity-btn" id="counter-minus">-</button>
+                                <input type="number" name="Quantity" data-numspin value="1" id="quantity_product" min="1">
+                                <input type="hidden" name="ProductID" value="@ViewBag.ProdDetails.ProductID" />
+                                <button type="button" class="btn quantity-btn" id="counter-plus">+</button>
+                            </div>
+                            <button type="submit" class="add-to-cart-btn">
+                                <i class="bi bi-cart-plus"></i>Thêm vào giỏ hàng
+                            </button>
+                        }
+                    }
+                    else
+                    {
+                        <div class="quantity" id="handleCounter">
+                            <span style="margin-right: 20px;">Số lượng</span>
+                            <button type="button" class="btn quantity-btn" id="counter-minus">-</button>
+                            <input type="number" data-numspin value="1" id="quantity_product" min="1" disabled="disabled">
+                            <button type="button" class="btn quantity-btn" id="counter-plus">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="location.href = '@Url.Action("Login","Users")'">
+                            <i class="bi bi-cart-plus"></i>Thêm vào giỏ hàng
+                        </button>
+                    }
+                }
+                else
+                {
+                    <div class="quantity" id="handleCounter">
+                        <span style="margin-right: 20px;">Số lượng</span>
+                        <button type="button" class="btn quantity-btn" id="counter-minus">-</button>
+                        <input type="number" data-numspin value="1" id="quantity_product" min="1" disabled="disabled">
+                        <button type="button" class="btn quantity-btn" id="counter-plus">+</button>
+                    </div>
+
+                    <button class="add-to-cart-btn sold-out-btn" disabled>
+                        <i class="bi bi-cart-plus"></i>Thêm vào giỏ hàng
+                    </button>
+                }
+
+                @if (user != null)
+                {
+                    using (Html.BeginForm("InsertListFavorite", "FavoriteProduct", FormMethod.Post, new { @class = "form-favorite-product" }))
+                    {
+                        @Html.ValidationSummary(true)
+
+                        <input name="UserID" value="@user.UserID" type="hidden" />
+                        <input name="ProductID" value="@ViewBag.ProdDetails.ProductID" type="hidden" />
+                        <button type="submit" class="love-product-btn"><i class="bi bi-heart-fill"></i></button>
+                    }
+                }
+                else
+                {
+                    <button id="insert-favorite-prod" class="love-product-btn" onclick="location.href = '@Url.Action("Login","Users")'"><i class="bi bi-heart-fill"></i></button>
+
+                }
+
+            </div>
+
+        </div>
+
+        <!-- right -->
+        <div class="col-lg-4 attributes-list">
+            <div class="atr-head">
+                <i class="ri-settings-3-line"></i> <span>Thông số kỹ thuật</span>
+            </div>
+            <div class="table-atrb">
+                <table class="table table-striped">
+
+                    <tbody class="attributes-list-items">
+                        <tr>
+                            <td>Chipset</td>
+                            <td>@ViewBag.ProdDetails.Chipset</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>@ViewBag.ProdDetails.Ram</td>
+                        </tr>
+                        <tr>
+                            <td>Bộ nhớ trong</td>
+                            <td>@ViewBag.ProdDetails.Memory</td>
+                        </tr>
+                        <tr>
+                            <td>Kích thước màn hình</td>
+                            <td>@ViewBag.ProdDetails.ScreenSize</td>
+                        </tr>
+
+                        <tr>
+                            <td>Hệ điều hành</td>
+                            <td>@ViewBag.ProdDetails.OS</td>
+                        </tr>
+                        <tr>
+                            <td>Camera </td>
+                            <td>@ViewBag.ProdDetails.Camera</td>
+                        </tr>
+                        <tr>
+
+                            <td>Độ phân giải</td>
+                            <td>@ViewBag.ProdDetails.Resolution</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end right -->
+    </div>
+    <!-- end-details -->
+    <div class=" row product_describe">
+        <div class="col-lg-8">
+            <p>
+                @ViewBag.ProdDetails.ProductIntroduction
+            </p>
+        </div>
+    </div>
+
+    @if (ViewBag.ProductList != null)
+    {
+        <!-- related products -->
+        <div class="product-list category-product">
+            <div class="product-head">
+                <a href="@Url.Action("Index/" + ViewBag.ThisProdCategories.CategoryID ,"Category")">
+                    <h3>Sản phẩm liên quan</h3>
+                </a>
+                <a href="@Url.Action("Index/" + ViewBag.ThisProdCategories.CategoryID ,"Category")"><span>Xem thêm</span></a>
+            </div>
+            <div class="owl-carousel">
+                @foreach (var item in ViewBag.ProductList)
+                {
+                    <!-- product1 -->
+                    <div class="element">
+                        <a href="@Url.Action("Index/"+item.ProductID,"Details")">
+                            <div class="card">
+                                <img class="card-img-top" src="~/image/@item.Image1" alt="Card image cap">
+                                <div class="card-body">
+                                    <div class="product-name">
+                                        <p class="card-text">@item.ProductName </p>
+                                    </div>
+                                    <h6 class="initial-price">@String.Format(formatMoney, "{0:c0}", ViewBag.ProdDetails.IntialPrice)</h6>
+                                    <h5>@String.Format(formatMoney, "{0:c0}", ViewBag.ProdDetails.Price)</h5>
+                                    <span class="rating">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </span>
+                                    <button class="love-product"><i class="ri-heart-3-fill"></i></button>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- end-product1 -->
+                }
+
+            </div>
+        </div>
+        <!-- end-related products -->
+    }
+
+    <div class="rating-comment-box">
+        <h4>Đánh giá và nhận xét</h4>
+        <div class="rating-box">
+            <div class="core-rating">
+                <h2>4.1/5</h2>
+                <h5>24 đánh giá và nhận xét</h5>
+                <span class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill status-off-star"></i>
+                </span>
+            </div>
+
+
+            @if (user != null)
+            {
+                <div class="comment-box">
+                    @using (Html.BeginForm("AddComment", "Details", new { @enctype = "multipart/form-data" }))
+                    {
+                        @Html.ValidationSummary(true)
+                        <div class="star-group">
+                            <span class="star-rating" id="1-star"><i class="bi bi-star-fill"></i></span>
+                            <span class="star-rating" id="2-star"><i class="bi bi-star-fill"></i></span>
+                            <span class="star-rating" id="3-star"><i class="bi bi-star-fill"></i></span>
+                            <span class="star-rating" id="4-star"><i class="bi bi-star-fill"></i></span>
+                            <span class="star-rating" id="5-star"><i class="bi bi-star-fill"></i></span>
+                        </div>
+
+                        <input type="text" class="form-control" name="UserID" value="@user.UserID" style="display:none">
+                        <input type="text" class="form-control" name="ProductID" value="@ViewBag.ProdDetails.ProductID" style="display:none">
+                        <input type="datetime" class="form-control" name="DateComment" value="@DateTime.Now.ToShortDateString()" style="display:none">
+                        <!--<input type="file" id="image-feedback" name="ImageComment"--> @*style="display:none"*@<!--/>
+                        <label for="image-feedback" class="image-feedback-upload"><i class="bi bi-card-image"></i></label>-->
+
+                        <textarea class="comment-text-area" name="CommentContent" placeholder="Nhận xét của bạn" required></textarea>
+                        <button type="submit" class="btn submit-comment">
+                            <i class="bi bi-send-fill"></i>Gửi
+                        </button>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="comment-box">
+                    <div class="rating-input-group" id="rating-comment-form">
+                        <div class="star-group">
+                            <span class="star-rating" id="1-star"><i class="ri-star-fill"></i></span>
+                            <span class="star-rating" id="2-star"><i class="ri-star-fill"></i></span>
+                            <span class="star-rating" id="3-star"><i class="ri-star-fill"></i></span>
+                            <span class="star-rating" id="4-star"><i class="ri-star-fill"></i></span>
+                            <span class="star-rating" id="5-star"><i class="ri-star-fill"></i></span>
+                        </div>
+                        @*<input type="file" id="image-feedback" style="display:none"/>
+
+                        <label for="image-feedback" class="image-feedback-upload"><i class="bi bi-card-image"></i></label>*@
+                        <textarea class="comment-text-area" name="comment" id="comment" placeholder="Nhận xét của bạn"></textarea>
+                        <button class="btn submit-comment" onclick="location.href = '@Url.Action("Login","Users")'">
+                            <i class="bi bi-send-fill"></i>Gửi
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="comment-list">
+
+            @if (ViewBag.CommentList == null)
+            {
+                <h4>Không có bình luận nào</h4>
+            }
+            else
+            {
+
+                foreach (var item in ViewBag.CommentList)
+                {
+                    <!-- comment -->
+                    <div class="box-cmt">
+                        <div class="box-user">
+                            <img src="~/image/@item.Customer.AvatarImage" alt="">
+                            <p class="name-user-comment">@item.Customer.UserName</p>
+                            
+
+                        </div>
+                        <div class="comment-text">
+                            <div class="triangle"></div>
+
+                            @if (user != null)
+                            {
+                                if (user.UserID == item.Customer.UserID)
+                                {
+                                    <a href="@Url.Action("DeleteComment/" + item.id,"Details")" class="delete-comment-btn"><i class="bi bi-trash"></i></a>
+                                }
+                            }
+                            <p> @item.CommentContent</p>
+                            @*<div class="feedback-image">
+                                <img src="~/image/@item.ImageComment" alt="">
+                            </div>*@
+                            <small class="day-comment">@String.Format("{0:dd/MM/yyyy}", item.DateComment)</small>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+    </div>
+
+</div>
+

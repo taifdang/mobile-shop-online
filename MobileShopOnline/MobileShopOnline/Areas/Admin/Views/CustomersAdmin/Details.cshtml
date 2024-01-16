@@ -1,0 +1,47 @@
+﻿@model MobileShopOnline.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Thông tin khách hàng</h2>
+
+    <div>
+        
+        <hr />
+        <dl class="dl-horizontal">
+            <dd style="float:left; margin-right:50px">
+                <img src="~/image/@Model.AvatarImage" style="width:200px; height:200px;border-radius:50%" />
+            </dd>
+            <dt>
+                Tên khách hàng
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+
+            <dt>
+                Email
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserEmail)
+            </dd>
+
+            <dt>
+                Số điện thoại
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.UserID }) |
+        @Html.ActionLink("Quay lại", "Index")
+    </p>
+</div>

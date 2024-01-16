@@ -1,0 +1,212 @@
+﻿
+@{
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+
+
+<!-- slider -->
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="#"><img class="d-block w-100" src="~/Image/1.png" alt="First slide"></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#"><img class="d-block w-100" src="~/Image/2.png" alt="Second slide"></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#"><img class="d-block w-100" src="~/Image/3.png" alt="Second slide"></a>
+                        </div>
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 advertise">
+                <div class="item">
+                    <a href="#"><img src="~/Image/ipad-vtb-360x202.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="~/Image/480.248.jpg" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end-slider -->
+<!-- sale-product -->
+<div class="content">
+    <div class="container">
+
+        <!-- brand -->
+        <div class="brand">
+            <h5>THƯƠNG HIỆU NỔI BẬT</h5>
+            <ul>
+                @foreach (var item in ViewBag.CategoriesList)
+                {
+                    <li><a href="@Url.Action("Index/" + item.CategoryID,"Category/" )"><img src="~/Image/@item.CategoryImage" alt="@item.CategoryName"></a></li>
+                }
+            </ul>
+        </div>
+
+        <!-- end-brand -->
+        <!-- sale-product -->
+        <div class="product-list">
+            <div class="product-head">
+                <a href="@Url.Action("GetAllProduct","Category")">
+                    <h3 style="color:#fff">SẢN PHẨM MỚI</h3>
+                </a>
+                <a href="@Url.Action("GetAllProduct","Category")"><span>Xem thêm</span></a>
+            </div>
+            <div class="owl-carousel">
+                @foreach (var item in ViewBag.ProductsList)
+                {
+                    <!-- product1 -->
+                    <div class="element">
+                        <a href="@Url.Action("Index/"+ item.ProductID,"Details" )">
+                            <div class="card" style="margin:auto 100px">
+                                <img class="card-img-top" src="~/Image/@item.Image1" style="height:235px">
+                                <div class="card-body">
+                                    <div class="product-name">
+                                        <p class="card-text">@item.ProductName</p>
+                                    </div>
+                                    <h6 class="initial-price">@String.Format(formatMoney, "{0:c0}", item.IntialPrice)</h6>
+                                    <h5>@String.Format(formatMoney, "{0:c0}", item.Price)</h5>
+                                    @if (item.amount < 1)
+                                    {
+                                        <div class="sold-out-label">
+                                            <img src="~/Image/download.png" alt="">
+                                            <p>Hết hàng</p>
+                                        </div>
+                                    }
+                                    <span class="rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </span>
+                                    <button class="love-product"><i class="bi bi-heart-fill"></i></button>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- end-product1 -->
+                }
+
+            </div>
+        </div>
+        <!-- end-sale-product -->
+        <!-- category product -->
+        <div class="product-list category-product">
+            <div class="product-head">
+                <a href="#">
+                    <h3>@ViewBag.FirstCate.CategoryName</h3>
+                </a>
+                <a href="#"><span>Xem thêm</span></a>
+            </div>
+            <div class="owl-carousel">
+                @foreach (var item in ViewBag.ProductsList_1)
+                {
+                    <!-- product1 -->
+                    <div class="element">
+                        <a href="@Url.Action("Index/"+ item.ProductID,"Details" )">
+                            <div class="card">
+                                <img class="card-img-top" src="~/Image/@item.Image1" alt="Card image cap">
+                                <div class="card-body">
+                                    <div class="product-name">
+                                        <p class="card-text">@item.ProductName </p>
+                                    </div>
+                                    <h6 class="initial-price">@String.Format(formatMoney, "{0:c0}", item.IntialPrice)</h6>
+                                    <h5>@String.Format(formatMoney, "{0:c0}", item.Price)</h5>
+                                    @if (item.amount < 1)
+                                    {
+                                        <div class="sold-out-label">
+                                            <img src="~/Image/download.png" alt="">
+                                            <p>Hết hàng</p>
+                                        </div>
+                                    }
+                                    <span class="rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </span>
+                                    <button class="love-product"><i class="ri-heart-3-fill"></i></button>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                <!-- end-product1 -->
+
+            </div>
+        </div>
+        <!-- end-first-category-product -->
+        <!-- category product -->
+        <div class="product-list category-product">
+            <div class="product-head">
+                <a href="#">
+                    <h3>@ViewBag.SecondCate.CategoryName</h3>
+                </a>
+                <a href="#"><span>Xem thêm</span></a>
+            </div>
+            <div class="owl-carousel">
+                @foreach (var item in ViewBag.ProductsList_2)
+                {
+                    <!-- product1 -->
+                    <div class="element">
+                        <a href="@Url.Action("Index/"+ item.ProductID,"Details" )">
+                            <div class="card">
+                                <img class="card-img-top" src="~/Image/@item.Image1" alt="Card image cap">
+                                <div class="card-body">
+                                    <div class="product-name">
+                                        <p class="card-text">@item.ProductName </p>
+                                    </div>
+                                    <h6 class="initial-price">@String.Format(formatMoney, "{0:c0}", item.IntialPrice)</h6>
+                                    <h5>@String.Format(formatMoney, "{0:c0}", item.Price)</h5>
+                                    @if (item.amount < 1)
+                                    {
+                                        <div class="sold-out-label">
+                                            <img src="~/Image/download.png" alt="">
+                                            <p>Hết hàng</p>
+                                        </div>
+                                    }
+                                    <span class="rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </span>
+                                    <button class="love-product"><i class="ri-heart-3-fill"></i></button>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                <!-- end-product1 -->
+
+            </div>
+        </div>
+        <!-- end-first-category-product -->
+
+    </div>
+</div>
+

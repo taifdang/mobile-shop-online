@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MobileShopOnline.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+<p>
+    @Html.ActionLink("Thêm sản phẩm", "Create")
+</p>
+<div class="table-responsive">
+    <table class="table" width="100%">
+        <thead>
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Thương hiệu</th>
+                <th>Công cụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="~/image/@item.Image1" width="120px" height="120px"></td>
+                    <td>@item.ProductName</td>
+                    <td>@item.amount</td>
+                    <td>@*<img src="~/image/@item.Category.CategoryImage" width="100px" height="50px">*@ @item.Category.CategoryName</td>
+                    <td>
+                        <h6 style="color:blue"><span class="las la-edit"></span><a href="@Url.Action("Edit", new { id=item.ProductID })">Chỉnh sửa</a></h6>
+                        <h6 style="color:blue"><span class="las la-trash"></span><a href="@Url.Action("Delete", new { id=item.ProductID })">Xóa bỏ </a></h6>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+ </div>

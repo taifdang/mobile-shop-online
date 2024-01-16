@@ -1,0 +1,98 @@
+﻿@using MobileShopOnline.Models;
+@model List<CartItem>
+@{ var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");}
+
+<div class="container">
+    <h2 style="margin-top: 20px;">Giỏ hàng của bạn <i class="bi bi-cart3"></i></h2>
+
+    <div class="row">
+
+        <div class="col-lg-8 cart">
+
+
+            <table class="cart-infor">
+                <tr class="cart-title">
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+
+                </tr>
+
+               
+                @foreach (var item in Model)
+                {
+                    <!-- product-1 -->
+                    @*<form action="post">*@
+                    <tr class="cart-item">
+                        @using (Html.BeginForm("UpdateQuantity", "Cart", FormMethod.Post))
+                        {
+                            <td>
+                                <a href="#">
+                                    <div class="product-infor-cart">
+                                        <img src="~/image/@item.ImagePro" alt="">
+                                        <div class="name-product-cart">@item.NamePro</div>
+                                    </div>
+                                </a>
+                            </td>
+
+                            <td>
+                                <div class="unit-price-cart">@String.Format(formatMoney, "{0:c0}", item.Price)</div>
+                            </td>
+
+
+                            <td>
+                                <div class="quantity quantity-cart" id="handleCounter">
+                                    <input type="hidden" value="@item.ProductID" name="ProductID" />
+                                   
+                                    
+                                    <input type="number" name="Quantity" value="@item.Number" min="1"/>
+                                    
+                                </div>
+                               
+                            </td>
+
+                            <td>
+                                <div class="into-money-cart">@String.Format(formatMoney, "{0:c0}", item.FinalPrice())</div>
+                            </td>
+                            <td>
+                                <button class="update-product-btn" type="submit"> <i class="bi bi-pencil-square"></i></button>
+
+                                <a class="delete-product-cart" href="@Url.Action("RemoveProduct/" + item.ProductID,"Cart")"><i class="bi bi-trash3-fill"></i></a>
+                            </td>
+                        }
+                    </tr>
+                    @*</form>*@
+                    <!-- end-product-1 -->
+                }
+
+            </table>
+
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="right-cart-element">
+                <div class="count-items">
+                    <span>Số lượng sản phẩm </span>
+                    <span style="float: right;">@ViewBag.TotalNumber</span>
+                </div>
+                <hr>
+                <div class="price-total">
+                    <span>Tổng tiền</span>
+                    <span class="total-price-cart">@String.Format(formatMoney, "{0:c0}", ViewBag.TotalPrice)</span>
+                </div>
+                
+                @using (Html.BeginForm("Payment", "Cart", FormMethod.Post, new { @class = "form-order" }))
+                {
+                    <input type="hidden" name="TotalPrice" value="@ViewBag.TotalPrice"/>
+                    <input type="submit" value="Đặt hàng" class="btn order-button">
+                }
+                
+            </div>
+            <a href="@Url.Action("Index","Home")" class="continute-shopping-link">Tiếp tục mua sắm >></a>
+
+        </div>
+    </div>
+</div>
+<!-- end-cart -->

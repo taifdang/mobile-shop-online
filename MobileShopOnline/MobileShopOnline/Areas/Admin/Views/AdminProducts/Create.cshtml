@@ -1,0 +1,139 @@
+﻿@model MobileShopOnline.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Create", "AdminProducts", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="checkbox-img">
+        <div class="box-img-admin">
+            <img id="blah" src="#" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgInp" name="ImgProd1"/>
+            <label for="imgInp"><i class="bi bi-upload">Hình 1</i></label>
+        </div>
+        <div class="box-img-admin">
+            <img id="bleh" src="#" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgImp" name="ImgProd2" />
+            <label for="imgImp"><i class="bi bi-upload">Hình 2</i></label>
+
+        </div>
+        <div class="box-img-admin">
+            <img id="bldh" src="#" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgIop" name="ImgProd3" />
+            <label for="imgIop"><i class="bi bi-upload">Hình 3</i></label>
+
+        </div>
+    </div>
+
+
+    <div class="detail-admin ">
+        <div class="projects">
+            <div class="card-body">
+                <input type="text" name="ProductName" class="form-control" placeholder="Tên sản phẩm" /><br>
+                <label>Số lượng:</label>
+                <input type="number" name="amount" min="1" max="10000" value="1" class="form-control" style="width:100px"><br>
+                <input type="text" id="fname" name="Price" class="form-control" placeholder="Giá sản phẩm" /><br>
+
+                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                <span>Giảm giá</span>
+
+                <input type="text" id="text" name="IntialPrice" style="display:none;" class="form-control" size="30" placeholder="Giá gốc" />
+                <script>
+                    function myFunction() {
+                        var checkBox = document.getElementById("myCheck");
+                        var text = document.getElementById("text");
+                        if (checkBox.checked == true) {
+                            text.style.display = "block";
+                        } else {
+                            text.style.display = "none";
+                        }
+                    }
+                </script>
+                <div class="input-box" style="margin:10px 0px">
+                    <label for="cars">Thương hiệu:</label>
+                    @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <textarea class="input-introd-prod" name="ProductIntroduction" placeholder="Giới thiệu sản phẩm" rows="10"></textarea>
+                <button type="submit" class="btn  btn-success" style="width:100%">Thêm mới</button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="checkbox-detail-admin">
+        <table class="table table-striped">
+            <tbody class="attributes-list-items">
+                <tr>
+                    <td>Chipset</td>
+                    <td>
+
+                        @Html.EditorFor(model => model.Chipset, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+                <tr>
+                    <td>RAM</td>
+                    <td>
+
+                        @Html.EditorFor(model => model.Ram, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bộ nhớ trong</td>
+                    <td>
+                        @Html.EditorFor(model => model.Memory, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Kích thước màn hình</td>
+                    <td>
+                        @Html.EditorFor(model => model.ScreenSize, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Hệ điều hành</td>
+                    <td>
+                        @Html.EditorFor(model => model.OS, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Camera</td>
+                    <td>
+                        @Html.EditorFor(model => model.Camera, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Pin</td>
+                    <td>
+                        @Html.EditorFor(model => model.Pin, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Độ phân giải</td>
+                    <td>
+                        @Html.EditorFor(model => model.Resolution, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+}
+
+
+
+<div>
+    @Html.ActionLink("Quay lại", "Index")
+</div>
+

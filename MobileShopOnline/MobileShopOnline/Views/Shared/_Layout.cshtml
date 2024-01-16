@@ -1,0 +1,160 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/icons/css/all.css">
+    <link href="~/icons/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/Content/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <title>Mobile Shop</title>
+</head>
+
+<body>
+
+    <!-- header -->
+    <div class="header">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 logo">
+                    <a href="@Url.Action("Index","Home")">
+                        <img src="~/image/logo.png" alt="logo" class="logo-image">
+                    </a>
+                </div>
+                <div class="col-lg-4 search-input">
+                    @using (Html.BeginForm("Search", "Category", FormMethod.Post, new { @class = "form-inline" }))
+                    {
+                        <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm" name="searchString" aria-label="Search">
+                        <button class=" my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                    }
+                </div>
+
+                <div class="col-lg-5 head-items">
+                    <div class="item hotline-item">
+                        <span class="hotline-label">
+                            <i class="bi bi-telephone-fill"></i>
+                            <p>Hotline hỗ trợ</p>
+                        </span>
+                        <h5>0967 123 456</h5>
+                    </div>
+
+                    @{ var user = Session["Account"] as MobileShopOnline.Models.Customer;}
+                    @if (user != null)
+                    {
+                        @Html.Action("CartPartial", "Cart")
+                    }
+                    else
+                    {
+                        <div class="item cart-btn">
+                            <a href="@Url.Action("Login","Users")" class="user-">
+                                <i class="bi bi-cart3"></i>
+                                <p>Giỏ hàng</p>
+                            </a>
+                        </div>
+                    }
+
+                    @if (user != null)
+                    {
+                        <div class="dropdown item user-loged">
+                            <a data-toggle="dropdown">
+                                <img src="~/image/@user.AvatarImage" class="user-avatar" />
+                                <p>@user.UserName</p>
+                            </a>
+                            <div class="dropdown-menu user-button" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item user-item" href="@Url.Action("Detail/" + user.UserID,"Users")"><i class="bi bi-person-fill"></i> Thông tin tài khoản</a>
+                                <a class="dropdown-item user-item" href="@Url.Action("GetOrder/"+user.UserID,"Order")"> <i class="bi bi-receipt-cutoff"></i> Đơn hàng của bạn</a>
+                                <a class="dropdown-item user-item" href="@Url.Action("FavoriteList/"+user.UserID,"FavoriteProduct")"><i class="bi bi-heart"></i>Sản phẩm yêu thích</a>
+                                <a class="dropdown-item user-item" href="@Url.Action("Logout","Users")"><i class="bi bi-box-arrow-right"></i> Đăng xuất</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item user-not-loged-in" id="login">
+                            <a href="@Url.Action("Login","Users")" class="user-login" id="login">
+                                <i class="bi bi-person"></i>
+                                <p>Đăng nhập</p>
+                            </a>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- end header -->
+    @{Html.RenderAction("MenuNav", "MenuNavPartial");}
+
+
+    <div style="min-height:430px">
+        @RenderBody()
+    </div>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="content-footer row">
+                <div class="introduce-content col-lg-3">
+                    <h6>Về chúng tôi</h6>
+                    <ul>
+                        <li><a href="#" class="">Giới thiệu về chúng tôi</a></li>
+                        <li><a href="#" class="">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="">Chính sách chất lượng</a></li>
+                        <li><a href="#" class="">Bảo mật thông tin</a></li>
+                    </ul>
+                </div>
+                <div class="introduce-content col-lg-3">
+                    <h6>Liên hệ nhanh</h6>
+                    <ul>
+                        <li>Địa chỉ : 828 Sư Vạn Hạnh-Q10-Tp.HCM</li>
+                        <li>Hotline : <span class="quick-contact-hotline">0967 123 456</span></li>
+                        <li>email : group4@gmail.com</li>
+                    </ul>
+                </div>
+                <div class="introduce-content col-lg-3">
+                    <h6>Theo dõi chúng tôi</h6>
+                    <ul class="contact-infor">
+                        <li><a href="#" class=""><i class="bi bi-facebook"></i>Group4 Shop</a></li>
+                        <li><a href="#" class=""><i class="bi bi-instagram"></i>group_4_inst</a></li>
+                        <li><a href="#" class=""><i class="bi bi-youtube"></i>Grou4 Channel</a></li>
+
+                    </ul>
+                </div>
+                <div class="introduce-content col-lg-3">
+                    <h6>Hỗ trợ thanh toán</h6>
+                    <a href="#" class=""><img src="~/image/atm-icon.png" alt="pay-help" class="pay-help-icon"></a>
+                    <a href="#" class=""><img src="~/image/visa-icon1.png" alt="pay-help" class="pay-help-icon"></a> <br>
+                    <a href="#" class=""><img src="~/image/master-cart.png" alt="pay-help" class="pay-help-icon"></a>
+                    <a href="#" class=""><img src="~/image/vnpaylogo.png" alt="pay-help" class="pay-help-icon"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end-footer -->
+
+    <script src="~/Scripts/jquery.slim.min.js"></script>
+    <script src="~/Scripts/poper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/owlcarousel/owl.carousel.min.js"></script>
+
+    <script src="~/Scripts/owlcarousel.custom.js"></script>
+    <script src="~/Scripts/jquery.custom.js"></script>
+
+    <script src="~/Scripts/main.js"></script>
+</body>
+
+</html>

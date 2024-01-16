@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+<style>
+    .report .card table tr td i{ margin-right:15px;}
+</style>
+<div class="cards">
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.CountUser</h4>
+            <span>Khách hàng</span>
+        </div>
+        <div>
+            <span class="las la-users"></span>
+        </div>
+    </div>
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.CountProduct</h4>
+            <span>Sản phẩm bán ra</span>
+        </div>
+        <div>
+            <span class="las la-shopping-bag"></span>
+        </div>
+    </div>
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.CountOrder</h4>
+            <span>Đơn đặt hàng</span>
+        </div>
+        <div>
+            <span class="las la-shopping-cart"></span>
+        </div>
+    </div>
+    <div class="card-single">
+        <div>
+            <h4>#</h4>
+            <span>Doanh thu</span>
+        </div>
+        <div>
+            <span class="las la-money-bill"></span>
+        </div>
+    </div>
+</div>
+<div class="recent-gird ">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+
+                <i class="bi bi-bar-chart"></i>Danh sách đơn hàng
+
+                <button>Xem tất cả<span class="las la-arrow-right"></span></button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Mã hóa đơn</th>
+                                <th>Tên khách hàng</th>
+                                <th>Số lượng sản phẩm</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.OrderList)
+                            {
+                                <tr>
+                                    <td>#@item.IdOrder</td>
+                                    <td>@item.Customer.UserName</td>
+                                    <td>@item.QuantityProduct</td>
+                                    @if (item.StatusOrder == 0)
+                                    {
+                                        <td style="color:red;">Chưa xác nhận</td>
+                                    }
+                                    else if (item.StatusOrder == 1)
+                                    {
+                                        <td style="color:forestgreen;">Đã xác nhận</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td style="color:orange;">Đã hủy </td>
+
+                                    }
+
+                                    <td><a href="#">Xem chi tiết</a></td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="report">
+        <div class="card">
+            <div class="card-header" style="display:block">
+
+                <div class="las la-bell"></div> <span>Thống kê đơn hàng</span>
+            </div>
+            <table class="table table-hover">
+
+                <tr>
+                    <td>
+                        <i class="bi bi-calendar4-week"></i>Đơn đặt hàng hôm nay:&emsp;@ViewBag.OrderToday đơn hàng
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="bi bi-clock-history"></i>Đơn hàng đang chờ thanh toán:&emsp;@ViewBag.DebtOrder đơn chưa thanh toán
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <i class="bi bi-check-lg"></i>Đơn hàng đã thanh toán:&emsp;@ViewBag.PaidOrder đơn đã thanh toán
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <i class="bi bi-x-circle"></i>Đơn hàng đã hủy:&emsp;@ViewBag.CancelOrder đơn đã hủy
+                        
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+

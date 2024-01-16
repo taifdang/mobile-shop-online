@@ -1,0 +1,151 @@
+﻿
+@model IEnumerable<MobileShopOnline.Models.Product>
+
+@{
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+
+
+
+<div class="container">
+    <!-- breadcumbs -->
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","Home",null)">Trang chủ</a></li>
+
+        </ol>
+    </nav>
+    <!-- end-breadcumbs -->
+    <!-- slider -->
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="#"><img class="d-block w-100" src="~/image/1.png" alt="First slide"></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="#"><img class="d-block w-100" src="~/image/2.png" alt="Second slide"></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="#"><img class="d-block w-100" src="~/image/3.png" alt="Second slide"></a>
+                    </div>
+
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-4 advertise">
+            <div class="item">
+                <a href="#"><img src="~/image/ipad-vtb-360x202.jpg" alt=""></a>
+            </div>
+            <div class="item">
+                <a href="#"><img src="~/image/480.248.jpg" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <!-- end-slider -->
+    <!-- filter-box -->
+    <div class="row">
+        <div class="block-filter">
+            @if (ViewBag.IdCategory == 0)
+            {
+                <div class="filter-content">
+                    <label class="btn">Mức giá</label>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("Under4MilAllProduct/"+0,"FiltProduct")'">Dưới 4 triệu</button>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("From4To8MilAllProduct/"+0,"FiltProduct")'">Từ 4 triệu đến 8 triệu</button>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("From8To12MilAllProduct/"+0,"FiltProduct")'">Từ 8 triệu đến 11 triệu</button>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("Over12MilAllProduct/"+0,"FiltProduct")'">Trên 12 triệu</button>
+                    <button onclick="location.href = '@Url.Action("GetAllProduct","Category")'"><i class="bi bi-x-circle-fill"></i></button>
+                </div>
+            }
+            else
+            {
+                <div class="filter-content">
+                    <label class="btn">Mức giá</label>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("Under4MilAllProduct/"+ViewBag.IdCategory,"FiltProduct")'">Dưới 4 triệu</button>
+                    <button type="button" class=" choosed-btn-filter" onclick="location.href = '@Url.Action("From4To8MilAllProduct/"+ViewBag.IdCategory,"FiltProduct")'">Từ 4 triệu đến 8 triệu</button>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("From8To12MilAllProduct/"+ViewBag.IdCategory,"FiltProduct")'">Từ 8 triệu đến 11 triệu</button>
+                    <button type="button" class="btn" onclick="location.href = '@Url.Action("Over12MilAllProduct/"+ViewBag.IdCategory,"FiltProduct")'">Trên 12 triệu</button>
+                    <button onclick="location.href = '@Url.Action("Index/"+ViewBag.IdCategory,"Category")'"><i class="bi bi-x-circle-fill"></i></button>
+                </div>
+            }
+
+            <div class="filter-content">
+                <label class="btn"> Sắp xếp theo</label>
+                <button type="button" class="btn"  onclick="location.href = '@Url.Action("IncreaseWithPrice/"+ViewBag.IdCategory,"FiltProduct")'"><i class="bi bi-sort-down-alt"></i> Giá thấp - cao</button>
+                <button type="button" class="btn" style="background-color: var(--main-color); color: #fff;" onclick="location.href = '@Url.Action("DescreaseWithPrice/"+ViewBag.IdCategory,"FiltProduct")'"><i class="bi bi-sort-up"></i> Giá cao - thấp</button>
+
+            </div>
+        </div>
+    </div>
+    <!-- end-filter-box -->
+    <!-- category product -->
+    <div class="product-list category-product">
+        <div class="product-head">
+            <h3>
+                Tất cả sản phẩm @if (ViewBag.IdCategory != 0)
+                {@ViewBag.CategoryProd.CategoryName} Giá thấp -> cao
+            </h3>
+        </div>
+        <div class="row product-list-items">
+
+            @if (Model.Count() != 0)
+            {
+                foreach (var item in Model)
+                {
+                    <!-- product1 -->
+                    <div class="element col-lg-3 col-md-4">
+                        <a href="@Url.Action("Index/"+ item.ProductID,"Details" )">
+                            <div class="card">
+                                <img class="card-img-top" src="~/image/@item.Image1" alt="Card image cap" style="height:235px">
+                                <div class="card-body">
+                                    <div class="product-name">
+                                        <p class="card-text">@item.ProductName </p>
+                                    </div>
+                                    <h6 class="initial-price">@String.Format(formatMoney, "{0:c0}", item.IntialPrice)</h6>
+                                    <h5>@String.Format(formatMoney, "{0:c0}", item.Price)</h5>
+                                    @if (item.amount < 1)
+                                    {
+                                        <div class="sold-out-label">
+                                            <img src="~/Image/download.png" alt="">
+                                            <p>Hết hàng</p>
+                                        </div>
+                                    }
+
+                                    <span class="rating">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </span>
+                                    <button class="love-product"><i class="ri-heart-3-fill"></i></button>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- end-product1 -->
+                }
+            }
+            else
+            {
+                <h3 style="margin:20px;text-align:center;color:gray">Không có sản phẩm nào</h3>
+            }
+        </div>
+
+    </div>
+
+</div>

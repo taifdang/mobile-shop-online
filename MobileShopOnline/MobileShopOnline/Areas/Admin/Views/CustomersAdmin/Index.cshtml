@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MobileShopOnline.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Quản lý tài khoản</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.UserID }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.UserID }) |
+            
+        </td>
+    </tr>
+}
+
+</table>
+
+<script>
+    $(document).ready(function () {
+        $(".sub-image img").hover(function () {
+           
+        })
+    }
+</script>

@@ -1,0 +1,58 @@
+﻿@model MobileShopOnline.Models.Customer
+
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="~/image/sign-up-wal.jpg" class="sign-up-image" />
+        </div>
+        <div class="col-lg-6">
+            <!--register-->
+            @using (Html.BeginForm("SignUp", "Users", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="register-form form-group ">
+                    <h2 style="margin-left: 24px;">Đăng ký tài khoản mới</h2>
+                    <div class="input-box">
+                        <input type="text" class="form-control" name="userName" placeholder="Họ và tên" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="form-control" name="userEmail" placeholder="Email" required>
+                        <small style="color:darkred">@ViewBag.NotificationEmail</small>
+
+                    </div>
+                    <div class="input-box">
+                        <input type="number" class="form-control" name="phoneNumber" placeholder="Số điện thoại" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" class="form-control" name="userPassword" placeholder="Nhập mật khẩu" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" class="form-control" name="rePassword" placeholder="Nhập lại mật khẩu" required>
+                        <small style="color:darkred">@ViewBag.Notification</small>
+                    </div>
+
+                    <div class="input-box">
+                        <div class="input_field checkbox_option">
+                            <input type="checkbox" name="rulesAcp" id="cb2">
+                            <label for="cb2">Tôi chấp nhận các điều khoản và điều kiện</label>
+                        </div>
+
+                        <div class="btn-box">
+                            <button type="submit">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <!--end-register-->
+        </div>
+    </div>
+</div>

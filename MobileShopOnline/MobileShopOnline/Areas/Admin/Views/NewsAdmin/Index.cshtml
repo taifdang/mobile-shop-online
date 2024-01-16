@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MobileShopOnline.Models.News>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            Hình ảnh minh họa
+        </th>
+
+        <th>
+            Nội dung
+        </th>
+
+        @*<th>
+            Ngày đăng
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="~/image/@item.NewsImage" style="width:200px;height:200px" />
+        </td>
+        <td>
+            <h3>@item.NewsTitle</h3>
+            @item.NewsContent.Substring(0, 300) ...
+        </td>
+        
+        
+        
+        <td style="width:10%">
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.NewsID }) <br />
+
+            @Html.ActionLink("Chi tiết", "Details", new { id = item.NewsID })  <br />
+
+            @Html.ActionLink("Xóa", "Delete", new { id = item.NewsID })
+
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,41 @@
+﻿@model MobileShopOnline.Models.Category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+        </div>
+        <div class="detail-categories">
+            <div style="padding:10px;">
+                <br>
+                @using (Html.BeginForm("Edit", "AdminCategories", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.CategoryID)
+                    <label for="topic">Tên danh mục : </label>
+                    <input value="@Model.CategoryName" class="form-control" style="width:400px"/> <br />
+                    <div class="box-img-admin">
+                        <label for="imgInp">Hình ảnh :</label>
+                        <img id="blah" src="~/image/@Model.CategoryImage" alt="" width="200px" height="50px" />
+
+                        <input accept="image/*" type='file' id="imgInp" name="ImgCate" /><br>
+                    </div><br>
+                    <div style="margin: 10px 0px;">
+                        <button type="submit" class="btn btn-success">Lưu</button>
+                        <a class="btn btn-danger" style="color:#fff">Xóa</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Quay lại", "Index")
+</div>

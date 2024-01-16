@@ -1,0 +1,168 @@
+﻿@model MobileShopOnline.Models.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>@Model.ProductName</h2>
+
+@using (Html.BeginForm("Edit", "AdminProducts", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="checkbox-img">
+        <div class="box-img-admin">
+            <img id="blah" src="~/image/@Model.Image1" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgInp" name="ImgProd1" />
+            <label for="imgInp"><i class="bi bi-upload">Hình 1</i></label>
+            @Html.HiddenFor(model => model.Image1)
+        </div>
+        <div class="box-img-admin">
+            <img id="bleh" src="~/image/@Model.Image2" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgImp" name="ImgProd2" />
+            <label for="imgImp"><i class="bi bi-upload">Hình 2</i></label>
+            @Html.HiddenFor(model => model.Image2)
+
+        </div>
+        <div class="box-img-admin">
+            <img id="bldh" src="~/image/@Model.Image3" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgIop" name="ImgProd3" />
+            <label for="imgIop"><i class="bi bi-upload">Hình 3</i></label>
+            @Html.HiddenFor(model => model.Image3)
+
+
+        </div>
+    </div>
+
+
+    <div class="detail-admin ">
+        <div class="projects">
+            <div class="card-body">
+                @Html.HiddenFor(model => model.ProductID)
+                <span>Tên sản phẩm</span>
+                <input type="text" name="ProductName" class="form-control" value="@Model.ProductName" /><br>
+                <label>Số lượng:</label>
+                <input type="number" name="amount" min="1" max="10000" value="@Model.amount" class="form-control" style="width:100px"><br>
+                <span>Giá</span>
+                <input type="text" id="fname" name="Price" class="form-control" placeholder="Giá sản phẩm" value="@Model.Price" /><br>
+
+                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                <span>Giảm giá</span>
+
+                <input type="text" id="text" name="IntialPrice" style="display:none;" class="form-control" size="30" placeholder="Giá gốc" value="@Model.IntialPrice" />
+                <script>
+                    function myFunction() {
+                        var checkBox = document.getElementById("myCheck");
+                        var text = document.getElementById("text");
+                        if (checkBox.checked == true) {
+                            text.style.display = "block";
+                        } else {
+                            text.style.display = "none";
+                        }
+                    }
+                </script>
+                <div class="input-box" style="margin:10px 0px">
+                    <label for="cars">Thương hiệu:</label>
+                    @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <textarea class="input-introd-prod" name="ProductIntroduction" placeholder="Giới thiệu sản phẩm" rows="10">@Model.ProductIntroduction</textarea>
+                <button type="submit" class="btn btn-success" style="width:70%">Lưu</button>
+                <a href="@Url.Action("Delete")" class="btn btn-danger" style="width: 29%">Xóa</a>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="checkbox-detail-admin">
+        <table class="table table-striped">
+            <tbody class="attributes-list-items">
+                <tr>
+                    <td>Chipset</td>
+                    <td>
+
+                        @Html.EditorFor(model => model.Chipset, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+                <tr>
+                    <td>RAM</td>
+                    <td>
+
+                        @Html.EditorFor(model => model.Ram, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bộ nhớ trong</td>
+                    <td>
+                        @Html.EditorFor(model => model.Memory, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Kích thước màn hình</td>
+                    <td>
+                        @Html.EditorFor(model => model.ScreenSize, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Hệ điều hành</td>
+                    <td>
+                        @Html.EditorFor(model => model.OS, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Camera</td>
+                    <td>
+                        @Html.EditorFor(model => model.Camera, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Pin</td>
+                    <td>
+                        @Html.EditorFor(model => model.Pin, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Độ phân giải</td>
+                    <td>
+                        @Html.EditorFor(model => model.Resolution, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+}
+
+
+<script>
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+    imgImp.onchange = evt => {
+        const [file] = imgImp.files
+        if (file) {
+            bleh.src = URL.createObjectURL(file)
+        }
+    }
+    imgIop.onchange = evt => {
+        const [file] = imgIop.files
+        if (file) {
+            bldh.src = URL.createObjectURL(file)
+        }
+    }
+</script>
+
+
+<div>
+    @Html.ActionLink("Quay lại", "Index")
+</div>

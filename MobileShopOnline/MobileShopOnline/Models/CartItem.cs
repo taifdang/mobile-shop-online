@@ -27,7 +27,7 @@ namespace MobileShopOnline.Models
             this.NamePro = productDB.ProductName;
             this.ImagePro = productDB.Image1;
             this.Price = productDB.Price;
-            this.Number = 1;
+            this.Number = 2;
         }
     }
 }
